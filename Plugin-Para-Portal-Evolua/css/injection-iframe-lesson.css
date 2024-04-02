@@ -20,7 +20,7 @@
     user-select: none;
     pointer-events: none;
     opacity: 1.0;
-    transition: 2500ms;
+    transition: opacity 2500ms;
 }
 .backKey{
     width: 24px;
