@@ -17,6 +17,10 @@ This extension aims to provide some useful features for the Brazilian profession
 
 - Automatic reloading of the page when completing a stage of the lesson.
 - Support for using the `->` and `<-` keys to navigate between lesson moments.
+- Leaves the browser in full screen automatically when accessing the Portal Evolua.
+- Makes the browser Maximized if you exit Full Screen, within the Portal Evolua.
+- Leave the browser Zoom automatically at 100% when accessing the Portal Evolua.
+- And other minor things...
 
 # Extension Compatibility
 
