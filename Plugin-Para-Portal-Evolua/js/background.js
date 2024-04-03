@@ -86,8 +86,10 @@ function PostProcessLoadedPage() {
 
                     //Show the loading indicator on lessons screen
                     var loadingIndicator = document.getElementsByClassName("modal-degustacao-load")[0];
-                    if (loadingIndicator != null && loadingIndicator != undefined)
+                    if (loadingIndicator != null && loadingIndicator != undefined) {
                         loadingIndicator.style.display = "block";
+                        loadingIndicator.style.zIndex = "5000";
+                    }
 
                     //Wait a time and reload the page
                     window.setTimeout(function () { window.location.reload(); }, 2500);
