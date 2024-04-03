@@ -18,7 +18,6 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     color: #ffffff;
     user-select: none;
-    pointer-events: none;
     opacity: 1.0;
     transition: opacity 2500ms;
 }
@@ -28,6 +27,7 @@
     background-image: url(../img/back-key.png);
     background-size: cover;
     display: inline-block;
+    pointer-events: none;
 }
 .nextKey{
     width: 24px;
@@ -35,4 +35,5 @@
     background-image: url(../img/next-key.png);
     background-size: cover;
     display: inline-block;
+    pointer-events: none;
 }

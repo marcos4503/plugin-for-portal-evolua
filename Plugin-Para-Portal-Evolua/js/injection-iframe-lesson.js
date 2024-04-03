@@ -19,7 +19,7 @@ document.getElementsByTagName("BODY")[0].addEventListener("keyup", (event) => {
 function OnAnyKeyPress(eventData) {
     //If is the "<-" key, send a message to go to previous slide
     if (eventData.keyCode === 37) {
-        //Get the "Back" icon node
+        //Get the "Back" icon node, of the first slide
         var backButton = document.getElementsByClassName("btn-volta-momento")[0];
 
         //If not found the button, cancel
@@ -30,6 +30,7 @@ function OnAnyKeyPress(eventData) {
         //If this button is disabled, cancel
         if (backButton.classList.contains("disabledbutton") == true) {
             console.log("Going Back is not available yet!");
+            BlinkTheLessonControlBar();
             return;
         }
 
@@ -45,7 +46,7 @@ function OnAnyKeyPress(eventData) {
 
     //If is the "->" key, send a message to go to next slide
     if (eventData.keyCode === 39) {
-        //Get the "Next" icon node
+        //Get the "Next" icon node, of the first slide
         var nextButton = document.getElementsByClassName("btn-avanca-momento")[0];
 
         //If not found the button, cancel
@@ -56,6 +57,7 @@ function OnAnyKeyPress(eventData) {
         //If this button is disabled, cancel
         if (nextButton.classList.contains("disabledbutton") == true) {
             console.log("Going Next is not available yet!");
+            BlinkTheLessonControlBar();
             return;
         }
 
@@ -70,11 +72,31 @@ function OnAnyKeyPress(eventData) {
     }
 }
 
+//Function that will set the lesson control bar to red, and after a time, change to default color
+function BlinkTheLessonControlBar() {
+    //Try to find the controlbars of all lesson slides
+    var controlBars = document.getElementsByClassName("bar-navegador");
+
+    //Set color of controlbars of all lesson slides, to red
+    for (var i = 0; i < controlBars.length; i++)
+        controlBars[i].style.background = "linear-gradient(135deg, #8892a0 0%, #b10000 100%)";
+
+    //Create the timer to set default color for all controlbars of all lesson slides
+    window.setTimeout(function () {
+        //Try to find the controlbars of all lesson slides
+        var controlBars = document.getElementsByClassName("bar-navegador");
+
+        //Remove the style foreach
+        for (var i = 0; i < controlBars.length; i++)
+            controlBars[i].style.background = "";
+    }, 150);
+}
 
 
 
 
-//If not found a element with class "conteudo-avaliacao-html", show the warning card
+
+//If not found a element with class "conteudo-avaliacao-html", show the warning card (means that the lesson is not a exam)
 if (document.getElementsByClassName("conteudo-avaliacao-html").length == 0) {
     //Create the warning card
     cardBaseNode = document.createElement('div');
@@ -82,6 +104,16 @@ if (document.getElementsByClassName("conteudo-avaliacao-html").length == 0) {
     cardBaseNode.setAttribute("class", "warningCardBase");
     cardBaseNode.innerHTML = 'Pressione <div class="backKey"></div> ou <div class="nextKey"></div> para Retroceder ou ' +
         'Avançar os momentos da Aula, quando for possível.';
+
+    //Setup the user dismiss event
+    cardBaseNode.addEventListener("mouseenter", (event) => {
+        //Start fade-out animation for the warning card
+        document.getElementById("pfpe.warnCard").style.opacity = "0.0";
+        document.getElementById("pfpe.warnCard").style.pointerEvents = "none";
+
+        //Warn that the card was dismissed
+        console.log("The Card was Dismissed by the user.");
+    });
 
     //Find the body element and add the card base to it
     document.getElementsByTagName("BODY")[0].appendChild(cardBaseNode);
@@ -103,13 +135,17 @@ if (document.getElementsByClassName("conteudo-avaliacao-html").length == 0) {
             window.setTimeout(function () {
                 //Start fade-out animation for the warning card
                 document.getElementById("pfpe.warnCard").style.opacity = "0.0";
+                document.getElementById("pfpe.warnCard").style.pointerEvents = "none";
 
                 //After 5 seconds...
                 window.setTimeout(function () {
                     //Disable the warning card from DOM
                     document.getElementById("pfpe.warnCard").style.display = "none";
+
+                    //Warn that the card was hided and closed
+                    console.log("The Card was completely Hided and Closed.");
                 }, 5000);
-            }, 15000);
+            }, 10000);
         }
     }, 1000);
 }

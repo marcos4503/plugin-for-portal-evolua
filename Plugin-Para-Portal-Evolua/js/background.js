@@ -21,7 +21,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         console.log("New page detected. Edge page is not allowed for Post Processing.");
         return undefined;
     }
-    //If is not a allowed page, ignore it
+    //If is not a allowed page in the manifest, ignore it
     if (tab.url?.includes(chrome.runtime.getManifest().host_permissions[0].replace("*://*.", "").replace("/*", "")) == false) {
         console.log("New page detected. Page not allowed in \"manifest.json\" for Post Processing.");
         return undefined;
@@ -29,8 +29,33 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
 
 
+    //Reset the zoom of the page (to 100%)
+    chrome.tabs.setZoom(tabId, 1.0, null);
+
+    //Auto set the page tab as active in the browser
+    chrome.tabs.update(tabId, { active: true });
+
+    //Set the window as fullscreen
+    chrome.windows.update(chrome.windows.WINDOW_ID_CURRENT, { state: "fullscreen" });
+    //Detects when the window is resized
+    chrome.windows.onBoundsChanged.addListener((window) => {
+        //Get current active tab of the resized window
+        chrome.tabs.query({ currentWindow: true, active: true }, function (resultTabArray) {
+            //If the current active tab of window is not a allowed page in the manifest, ignore this callback
+            if (resultTabArray[0].url?.includes(chrome.runtime.getManifest().host_permissions[0].replace("*://*.", "").replace("/*", "")) == false)
+                return;
+
+            //Detect the current state of the resized window
+            chrome.windows.get(chrome.windows.WINDOW_ID_CURRENT, function (window) {
+                //If is changed to "normal" state, set it to maximized state
+                if (window.state == "normal")
+                    chrome.windows.update(chrome.windows.WINDOW_ID_CURRENT, { state: "maximized" });
+            });
+        });
+    });
+
     //Post process the loaded page
-    chrome.scripting.executeScript({ target: { tabId: tabId }, func: PostProcessLoadedPage, }).then(() => {
+    chrome.scripting.executeScript({ target: { tabId: tabId }, func: PostProcessLoadedPage }).then(() => {
         console.log("New page detected. Post Processing...");
     });
 });
@@ -73,6 +98,10 @@ function PostProcessLoadedPage() {
                         newCss.setAttribute("rel", "stylesheet");
                         newCss.setAttribute("href", chrome.runtime.getURL("css/injection-iframe-lesson.css"));
                         headTag.appendChild(newCss);
+
+                        //Force the browser focus into this new added lesson iframe
+                        node.focus();
+                        window.setTimeout(function () { node.contentWindow.focus(); }, 250);
                     };
                 }
             }
@@ -97,4 +126,7 @@ function PostProcessLoadedPage() {
             }
         }
     }).observe(document.body, { childList: true, subtree: true });
+
+    //Set the page as fullscreen automatically
+    //document.documentElement.requestFullscreen();
 }
