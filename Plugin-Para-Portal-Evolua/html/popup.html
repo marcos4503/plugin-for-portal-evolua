@@ -4,7 +4,7 @@
     <head>
         <!-- Head of PopUp of Extension -->
         <link rel="stylesheet" href="../css/popup-style.css">
-        <!-- <script src="../js/popup.js"></script> -->
+        <script src="../js/popup.js"></script>
         <meta charset="UTF-8">
     </head>
 
@@ -13,12 +13,45 @@
         <div class="extensionPopUpBase">
             <!-- Content of PopUp -->
             <div class="popUpContent">
-                <div class="popUpContentTitle">Plugin Para o Portal Evolua</div>
-                Este Plugin adiciona novas funções de utilidade ao Portal Evolua.
-                <br />
-                <br />
-                <hr />
-                <div class="popUpContentFooter">Criado com ♥ por <a href="https://github.com/marcos4503" target="_blank">Marcos Tomaz</a> em 2024</div>
+                <div>
+                    <div class="popUpContentTitle">Plugin Para o Portal Evolua</div>
+                </div>
+                <div>
+                    Este Plugin adiciona novas funções de utilidade ao Portal Evolua.
+                    <br>
+                    <br>
+                    <br>
+                    <hr />
+                </div>
+                <div class="popUpContentContent">
+                    <!-- Option 1 -->
+                    <div class="popUpOption">
+                        <div class="popUpOptionName">Habilitar Logotipo da Ensinext</div>
+                        <div></div>
+                        <div class="popUpOptionField">
+                            <select id="set_enableLogo">
+                                <option value="true">Sim</option>
+                                <option value="false">Não</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Option 2 -->
+                    <div class="popUpOption">
+                        <div class="popUpOptionName">Fechar Outras Abas Enquanto Portal Evolua Está Aberto</div>
+                        <div></div>
+                        <div class="popUpOptionField">
+                            <select id="set_closeTabs">
+                                <option value="true">Sim</option>
+                                <option value="false">Não</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <hr />
+                    <div class="popUpContentFooter">Criado com ♥ por <a href="https://github.com/marcos4503" target="_blank">Marcos Tomaz</a> em 2024</div>
+                </div>
             </div>
         </div>
     </body>

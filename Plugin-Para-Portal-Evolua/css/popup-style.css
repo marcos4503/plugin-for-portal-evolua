@@ -1,7 +1,7 @@
 /* Body */
 
 html, body {
-    height: 100%;
+    height: auto;
     width: 100%;
 }
 body {
@@ -25,7 +25,7 @@ hr{
     background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
 }
 a{
-    color: #c3e9c5;
+    color: #03a800;
     text-decoration: none;
 }
 
@@ -33,13 +33,10 @@ a{
 
 .extensionPopUpBase{
     width: 384px;
-    height: 200px;
-    max-height: 200px;
+    height: 480px;
+    max-height: 480px;
     padding: 4px;
     overflow: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background-color: #1E273B;
 }
 ::-webkit-scrollbar {
@@ -59,13 +56,44 @@ a{
 .popUpContent{
     display: block;
     max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
     color: #ffffff;
+    grid-template-rows: auto auto 100% auto;
 }
 .popUpContentTitle{
     font-size: 20px;
     font-weight: bolder;
+    margin-top: 16px;
     margin-bottom: 16px;
+}
+.popUpContentContent{
+    height: 264px;
+}
+.popUpOption{
+    display: grid;
+    grid-template-columns: auto 16px 25%;
+    margin-bottom: 8px;
+}
+.popUpOptionName{
+    display: flex;
+    align-items: center;
+    text-align: left;
+    color: #bdbdbd;
+}
+.popUpOptionField{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+select{
+    width: 100%;
+    padding: 4px 4px;
+    display: inline-block;
+    border: 1px solid rgb(218, 218, 218);
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 .popUpContentFooter{
     font-size: 10px;

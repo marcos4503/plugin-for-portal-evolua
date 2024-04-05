@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Plugin Para o Portal Evolua",
     "description": "Adiciona novas funções de utilidade ao Portal Evolua.",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "action": {
         "default_icon": "img/icon-19px.png",
         "default_popup": "html/popup.html"
@@ -17,7 +17,8 @@
         "storage",
         "tabs",
         "activeTab",
-        "scripting"
+        "scripting",
+        "notifications"
     ],
     "host_permissions": [
         "*://*.evoluaeducacao.com.br/*"
@@ -28,6 +29,9 @@
                 "js/injection-iframe-lesson.js",
                 "img/back-key.png",
                 "img/next-key.png",
+                "img/ensinext-login.png",
+                "img/ensinext-favicon.png",
+                "img/ensinext-navbar.png",
                 "css/injection-iframe-lesson.css" ],
             "matches": [ "<all_urls>" ]
         }
