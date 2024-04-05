@@ -53,8 +53,15 @@ function InstallAutoSaveListenersForPrefs() {
     });
 }
 
+//Function that render the extension version
+function RenderExtensionVersion() {
+    //Render the extension version
+    document.getElementById("extensionVersion").innerHTML = ("v" + chrome.runtime.getManifest().version);
+}
+
 //Load the current user preferences on end of the DOM creation
 window.onload = function () {
     LoadUserPreferences();
     InstallAutoSaveListenersForPrefs();
+    RenderExtensionVersion();
 }
