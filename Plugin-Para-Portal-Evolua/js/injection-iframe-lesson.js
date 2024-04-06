@@ -17,6 +17,9 @@ document.getElementsByTagName("BODY")[0].addEventListener("keyup", (event) => {
 
 //Function that will be called on every key press inside the iframe of lesson
 function OnAnyKeyPress(eventData) {
+    //Get the current element with browser focus inside this iframe of lesson
+    var currentActiveElement = document.activeElement;
+
     //If is the "<-" key, send a message to go to previous slide
     if (eventData.keyCode === 37) {
         //Get the "Back" icon node, of the first slide
@@ -33,6 +36,12 @@ function OnAnyKeyPress(eventData) {
             BlinkTheLessonControlBar();
             return;
         }
+        //If the current active element is a text field, cancel
+        if (currentActiveElement != null && currentActiveElement != undefined)
+            if (currentActiveElement.tagName == "TEXTAREA" || currentActiveElement.tagName == "INPUT") {
+                console.log("Going Back is not available while editing some text field!");
+                return;
+            }
 
         //Try to send the message
         try {
@@ -60,6 +69,12 @@ function OnAnyKeyPress(eventData) {
             BlinkTheLessonControlBar();
             return;
         }
+        //If the current active element is a text field, cancel
+        if (currentActiveElement != null && currentActiveElement != undefined)
+            if (currentActiveElement.tagName == "TEXTAREA" || currentActiveElement.tagName == "INPUT") {
+                console.log("Going Next is not available while editing some text field!");
+                return;
+            }
 
         //Try to send the message
         try {

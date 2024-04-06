@@ -98,6 +98,20 @@ function ChangePageLogoToEnsinext(logoEnabled, tabId) {
                 //Change the background color
                 document.getElementsByTagName("HTML")[0].style.height = "100%";
                 document.getElementsByTagName("BODY")[0].style.background = "linear-gradient(317deg, rgba(7,23,56,1) 0%, rgba(13,51,24,1) 100%)";
+                //Add the font remote css
+                fontNode1 = document.createElement('link');
+                fontNode1.setAttribute("rel", "preconnect");
+                fontNode1.setAttribute("href", "https://fonts.googleapis.com");
+                document.getElementsByTagName("HEAD")[0].appendChild(fontNode1);
+                fontNode2 = document.createElement('link');
+                fontNode2.setAttribute("rel", "preconnect");
+                fontNode2.setAttribute("href", "https://fonts.gstatic.com");
+                fontNode2.setAttribute("crossorigin", "");
+                document.getElementsByTagName("HEAD")[0].appendChild(fontNode2);
+                fontNode3 = document.createElement('link');
+                fontNode3.setAttribute("rel", "stylesheet");
+                fontNode3.setAttribute("href", "https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap");
+                document.getElementsByTagName("HEAD")[0].appendChild(fontNode3);
 
                 //Find the necessary elements
                 var loginContainer = loginContainerNode.getElementsByClassName("container")[0];
