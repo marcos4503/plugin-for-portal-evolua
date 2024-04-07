@@ -98,3 +98,23 @@ select{
 .popUpContentFooter{
     font-size: 10px;
 }
+
+/* Toast content */
+
+.toastBase{
+    width: calc(100% - 16px);
+    height: 64px;
+    padding: 8px;
+    position: fixed;
+    bottom: -200px;
+    left: 0px;
+    background-color: #2d9f3c;
+    z-index: 10;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bolder;
+    font-size: 14px;
+    transition: all 250ms;
+}
