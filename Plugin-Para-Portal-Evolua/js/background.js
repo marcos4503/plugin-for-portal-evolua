@@ -32,9 +32,10 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
 
     //Load the user preferences and run the optional functions
-    chrome.storage.sync.get(['enableLogo', 'closeTabs'], function (data) {
+    chrome.storage.sync.get(['enableLogo', 'closeTabs', 'enableBack'], function (data) {
         ChangePageLogoToEnsinext(data.enableLogo, tabId);
         CloseOtherTabs(data.closeTabs);
+        InformAvailabilityOfBackFeature(data.enableBack, tabId);
     });
 
     //Reset the zoom of the page (to 100%)
@@ -97,7 +98,7 @@ function ChangePageLogoToEnsinext(logoEnabled, tabId) {
             if (loginContainerNode != null && loginContainerNode != undefined) {
                 //Change the background color
                 document.getElementsByTagName("HTML")[0].style.height = "100%";
-                document.getElementsByTagName("BODY")[0].style.background = "linear-gradient(317deg, rgba(7,23,56,1) 0%, rgba(13,51,24,1) 100%)";
+                document.getElementsByTagName("BODY")[0].style.background = "linear-gradient(317deg, rgb(0, 30, 90) 0%, rgb(0, 76, 22) 100%)";
                 //Add the font remote css
                 fontNode1 = document.createElement('link');
                 fontNode1.setAttribute("rel", "preconnect");
@@ -146,9 +147,9 @@ function ChangePageLogoToEnsinext(logoEnabled, tabId) {
                     var arrowSize = Math.random() * (80 - 24) + 24;
                     var initialHeight = Math.floor(Math.random() * 2);
                     if (initialHeight == 0)
-                        initialHeight = Math.random() * (25 - 0) + 0;
+                        initialHeight = Math.random() * (20 - 0) + 0; //<- 0 min, 20 max
                     if (initialHeight == 1)
-                        initialHeight = Math.random() * (100 - 75) + 75;
+                        initialHeight = Math.random() * (100 - 70) + 70; //<- 70 min, 100 max
                     var arrowNumber = Math.floor(Math.random() * 3);
 
                     //Decide the arrow to show
@@ -184,8 +185,8 @@ function ChangePageLogoToEnsinext(logoEnabled, tabId) {
                     }, 25);
                 }
                 //Setup the arrows spawners
-                loginUserField.addEventListener("keyup", function () { spawnRandomArrow(); });
-                loginPasswordField.addEventListener("keyup", function () { spawnRandomArrow(); });
+                loginUserField.addEventListener("input", function () { spawnRandomArrow(); });
+                loginPasswordField.addEventListener("input", function () { spawnRandomArrow(); });
 
                 //Add the legend of the logo
                 logoLegend = document.createElement('div');
@@ -283,6 +284,23 @@ function CloseOtherTabs(closeTabsEnabled) {
                     title: "Abas Fechadas",
                     message: "As outras abas do Browser, foram fechadas automaticamente. Mantenha o foco!",
                 }, function () { });
+    });
+}
+
+//Function that inform to the page, if the back button feature is enabled
+function InformAvailabilityOfBackFeature(backButtonEnabled, tabId) {
+    //If the back button is not enabled, ignore this call
+    if (backButtonEnabled != "true")
+        return;
+
+    //Run a code that informs to the page, if the back button is enabled
+    chrome.scripting.executeScript({
+        target: { tabId: tabId }, func: () => {
+            //Get the body of document and set attribute of the information
+            document.getElementsByTagName("BODY")[0].setAttribute("pfpe.backButtonEnabled", "true");
+        }
+    }).then(() => {
+        console.log("New page detected. Informing that back button is enabled...");
     });
 }
 

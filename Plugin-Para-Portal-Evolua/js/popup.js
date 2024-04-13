@@ -10,25 +10,31 @@ function LoadUserPreferences() {
     //Find the UI elements
     var set_enableLogo = document.getElementById("set_enableLogo");
     var set_closeTabs = document.getElementById("set_closeTabs");
+    var set_enableBack = document.getElementById("set_enableBack");
 
     //Try to load the current preferences of optional functions
-    chrome.storage.sync.get(['enableLogo', 'closeTabs'], function (data) {
+    chrome.storage.sync.get(['enableLogo', 'closeTabs', 'enableBack'], function (data) {
         //If don't have a preference for "enableLogo", set default
         if (data.enableLogo == null)
             chrome.storage.sync.set({ "enableLogo": "false" });
         //If don't have a preference for "closeTabs", set default
         if (data.closeTabs == null)
             chrome.storage.sync.set({ "closeTabs": "true" });
+        //If don't have a preference for "enableBack", set default
+        if (data.enableBack == null)
+            chrome.storage.sync.set({ "enableBack": "true" });
 
         //Get the updated current preferences
-        chrome.storage.sync.get(['enableLogo', 'closeTabs'], function (data) {
+        chrome.storage.sync.get(['enableLogo', 'closeTabs', 'enableBack'], function (data) {
             //Render the current preferences in the UI
             set_enableLogo.value = data.enableLogo;
             set_closeTabs.value = data.closeTabs;
+            set_enableBack.value = data.enableBack;
 
             //Unlock the edition of fields
             set_enableLogo.removeAttribute("disabled");
             set_closeTabs.removeAttribute("disabled");
+            set_enableBack.removeAttribute("disabled");
         });
     });
 }
@@ -38,6 +44,7 @@ function InstallAutoSaveListenersForPrefs() {
     //Find the UI elements
     var set_enableLogo = document.getElementById("set_enableLogo");
     var set_closeTabs = document.getElementById("set_closeTabs");
+    var set_enableBack = document.getElementById("set_enableBack");
 
     //Install the callbacks
     set_enableLogo.addEventListener("change", function () {
@@ -50,6 +57,13 @@ function InstallAutoSaveListenersForPrefs() {
     set_closeTabs.addEventListener("change", function () {
         //Save the preference
         chrome.storage.sync.set({ "closeTabs": set_closeTabs.value });
+
+        //Notify
+        ShowToastNotification("Configuração aplicada!");
+    });
+    set_enableBack.addEventListener("change", function () {
+        //Save the preference
+        chrome.storage.sync.set({ "enableBack": set_enableBack.value });
 
         //Notify
         ShowToastNotification("Configuração aplicada!");
